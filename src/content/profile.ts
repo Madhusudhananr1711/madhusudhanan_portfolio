@@ -9,7 +9,7 @@ export const profile = {
   github: 'https://github.com/Madhusudhananr1711',
   githubUser: 'Madhusudhananr1711',
   linkedin: 'https://linkedin.com/in/r-madhu-sudhanan1711',
-  resumeUrl: '/MadhusudhananR.pdf',
+  resumeUrl: 'MadhusudhananR.pdf',
   summary:
     'Entry-level Java developer with internship experience building and maintaining applications in Core Java, Spring Boot, REST APIs, and MySQL. Comfortable with OOP, data structures and algorithms, and database work, and practiced at testing, debugging, and exception handling. Familiar with securing APIs through JWT authentication. Looking to join a team where I can contribute to real software projects and keep growing my Java skills through hands-on work.',
 }
