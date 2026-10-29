@@ -1,0 +1,23 @@
+# Dependencies (recreated by npm install)
+node_modules/
+
+# Build output (recreated by npm run build)
+dist/
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Environment files / secrets
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor and OS files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
