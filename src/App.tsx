@@ -1,47 +1,50 @@
-import { Nav } from './components/Nav'
-import { Hero } from './components/Hero'
-import { StatsBand } from './components/StatsBand'
-import { About } from './components/About'
-import { Projects } from './components/Projects'
-import { ArchitectureDiagram } from './components/ArchitectureDiagram'
-import { ApiPlayground } from './components/ApiPlayground'
-import { SecurityShowcase } from './components/SecurityShowcase'
-import { OpenApiDocs } from './components/OpenApiDocs'
-import { CaseStudies } from './components/CaseStudies'
-import { GithubActivity } from './components/GithubActivity'
-import { Experience } from './components/Experience'
-import { Contact } from './components/Contact'
-import { useTheme } from './hooks/useTheme'
-import { profile } from './content/profile'
+import { lazy, Suspense } from 'react'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+import { Layout } from './components/Layout'
+import { HomePage } from './pages/HomePage'
+
+// Lazy load dedicated pages to optimize initial bundle size & performance
+const ArchitecturePage = lazy(() =>
+  import('./pages/ArchitecturePage').then((m) => ({ default: m.ArchitecturePage })),
+)
+const ApiPlaygroundPage = lazy(() =>
+  import('./pages/ApiPlaygroundPage').then((m) => ({ default: m.ApiPlaygroundPage })),
+)
+const SecurityPage = lazy(() =>
+  import('./pages/SecurityPage').then((m) => ({ default: m.SecurityPage })),
+)
+const DocsPage = lazy(() =>
+  import('./pages/DocsPage').then((m) => ({ default: m.DocsPage })),
+)
+const CaseStudiesPage = lazy(() =>
+  import('./pages/CaseStudiesPage').then((m) => ({ default: m.CaseStudiesPage })),
+)
+
+function PageLoader() {
+  return (
+    <div className="surface min-h-[60vh] flex flex-col items-center justify-center p-8">
+      <div className="h-10 w-10 border-4 border-amber border-t-transparent rounded-full animate-spin mb-4" />
+      <p className="font-mono text-xs uppercase tracking-widest muted">Loading Page…</p>
+    </div>
+  )
+}
 
 export default function App() {
-  const { theme, toggle } = useTheme()
   return (
-    <>
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[60] focus:bg-amber focus:px-4 focus:py-2 focus:font-semibold focus:text-ink"
-      >
-        Skip to content
-      </a>
-      <Nav theme={theme} onToggleTheme={toggle} />
-      <main id="main">
-        <Hero />
-        <StatsBand />
-        <About />
-        <Projects />
-        <ArchitectureDiagram />
-        <ApiPlayground />
-        <SecurityShowcase />
-        <OpenApiDocs />
-        <CaseStudies />
-        <GithubActivity />
-        <Experience />
-        <Contact />
-      </main>
-      <footer className="bg-ink px-5 py-8 text-center text-sm text-white/60">
-        © {new Date().getFullYear()} {profile.name}. Built with React, TypeScript, Vite and Tailwind CSS.
-      </footer>
-    </>
+    <BrowserRouter>
+      <Layout>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/architecture" element={<ArchitecturePage />} />
+            <Route path="/api-playground" element={<ApiPlaygroundPage />} />
+            <Route path="/security" element={<SecurityPage />} />
+            <Route path="/docs" element={<DocsPage />} />
+            <Route path="/case-studies" element={<CaseStudiesPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </Layout>
+    </BrowserRouter>
   )
 }
